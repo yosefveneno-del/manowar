@@ -1,0 +1,14 @@
+local trusted = {}
+
+game.Loaded:Wait()
+
+local function handleNew(descendant)
+	if descendant:IsA("LocalScript") or descendant:IsA("ModuleScript") then
+		if not trusted[descendant] then
+			-- send to server, warn, etc.
+			warn("😨 What is THIS:", descendant:GetFullName())
+		end
+	end
+end
+
+game.DescendantAdded:Connect(handleNew)
